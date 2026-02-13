@@ -1,0 +1,39 @@
+# FLLC NDEF Payload Templates
+# Format: TYPE | PAYLOAD | DESCRIPTION
+# Use with Flipper Zero NFC -> Add Manually -> NDEF
+# FLLC 2026
+
+# === URL REDIRECTS ===
+URL | https://portal.example.com/auth | Credential harvest redirect
+URL | https://192.168.4.1/captive | Evil twin captive portal
+URL | https://example.com/update | Fake software update page
+
+# === WIFI PROVISIONING ===
+# These auto-connect the device to a specified WiFi network
+WIFI | S:FLLC_Guest;T:WPA;P:research2026;; | WPA2 network auto-connect
+WIFI | S:Free_Airport_WiFi;T:nopass;; | Open network (evil twin)
+WIFI | S:Corporate_Guest;T:WPA;P:Welcome1;; | Typical guest network
+
+# === VCARD INJECTION ===
+VCARD | BEGIN:VCARD\nVERSION:3.0\nFN:IT Support\nTEL:+15551234567\nEMAIL:support@company.com\nEND:VCARD | Spoofed IT contact
+VCARD | BEGIN:VCARD\nVERSION:3.0\nFN:Help Desk\nTEL:+15559876543\nURL:https://help.example.com\nEND:VCARD | Fake helpdesk
+
+# === TEXT RECORDS ===
+TEXT | Security audit tag - FLLC 2026 | Identification marker
+TEXT | Scan complete. Report ID: FL-2026-0001 | Audit trail tag
+
+# === ANDROID APP LAUNCH ===
+AAR | com.android.settings | Opens Android Settings
+AAR | com.android.chrome | Opens Chrome browser
+
+# === PHONE/SMS ===
+TEL | tel:+15551234567 | Auto-dial number
+SMS | sms:+15551234567?body=Test | Auto-compose SMS
+
+# === NOTES ===
+# - URL payloads are most effective for social engineering
+# - WiFi provisioning works on most Android devices automatically
+# - iOS requires user confirmation for WiFi and URL actions
+# - vCards work on both iOS and Android
+# - Always test payloads on your own devices first
+# - For authorized security research only

@@ -1,15 +1,132 @@
-## Playground (and dump) of stuff I made, modified, researched, or found for the Flipper Zero.
-**Looking for Infrared (IR) codes? Head over to [the IRDB](https://github.com/UberGuidoZ/Flipper-IRDB)! Just want to download part of any repo? [Try over here](https://uberguidoz.github.io/DownGit/)!**
+```
+ ███████╗██╗     ██╗      ██████╗
+ ██╔════╝██║     ██║     ██╔════╝
+ █████╗  ██║     ██║     ██║
+ ██╔══╝  ██║     ██║     ██║
+ ██║     ███████╗███████╗╚██████╗
+ ╚═╝     ╚══════╝╚══════╝ ╚═════╝
+  FLIPPER ZERO ARSENAL — 2026
+```
 
-If you're new to github in general, I have a _very_ rough/basic guide over on the Official Discord [in this thread](https://discord.com/channels/740930220399525928/995390495415095296). Link not available? [Try this first](https://discord.com/invite/flipper)!
+<p align="center">
+<img src="https://img.shields.io/badge/FLLC-Flipper_Zero-00FFFF?style=for-the-badge&labelColor=0D0D2B"/>
+<img src="https://img.shields.io/badge/BadUSB-Payloads-FF00FF?style=for-the-badge&labelColor=0D0D2B"/>
+<img src="https://img.shields.io/badge/Sub--GHz-Radio-7B2FBE?style=for-the-badge&labelColor=0D0D2B"/>
+<img src="https://img.shields.io/badge/NFC-Attacks-00FFFF?style=for-the-badge&labelColor=0D0D2B"/>
+<img src="https://img.shields.io/badge/Anti--AI-Evasion-FF00FF?style=for-the-badge&labelColor=0D0D2B"/>
+</p>
 
------
+---
 
-I've had so many asking for me to add this.<br>
-![Flipper_Blush](https://user-images.githubusercontent.com/57457139/183561666-4424a3cc-679b-4016-a368-24f7e7ad0a88.jpg) ![Flipper_Love](https://user-images.githubusercontent.com/57457139/183561692-381d37bd-264f-4c88-8877-e58d60d9be6e.jpg)
+## Overview
 
+Complete Flipper Zero payload library and reference guide. Includes original community resources plus FLLC custom tools with anti-AI evasion, polymorphic payloads, and comprehensive radio/NFC/IR attack documentation.
 
-![Flipper_Clap](https://user-images.githubusercontent.com/57457139/183561789-2e853ede-8ef7-41e8-a67c-716225177e5d.jpg) ![Flipper_OMG](https://user-images.githubusercontent.com/57457139/183561787-e21bdc1e-b316-4e67-b327-5129503d0313.jpg)
+---
 
-credit:
-![UberGuidoZ](https://cdn.discordapp.com/emojis/1000632669622767686.gif)
+## FLLC Custom Modules
+
+| Directory | Contents |
+|-----------|----------|
+| `FLLC_BadUSB/` | 6+ BadUSB payloads — WiFi grab, sysinfo dump, browser harvest, reverse beacon, credential dump, network recon |
+| `FLLC_SubGHz/` | Complete frequency atlas, rolling code attack theory, protocol reference |
+| `FLLC_NFC/` | Mifare Classic attack guide, NDEF injection payloads, EMV reference, magic card guide |
+| `FLLC_Infrared/` | Universal IR code database, capture & replay guide, protocol reference |
+| `FLLC_Tools/` | SD card organizer, polymorphic payload builder with anti-AI timing evasion |
+
+---
+
+## FLLC BadUSB Payloads
+
+| Payload | Target | Description |
+|---------|--------|-------------|
+| `wifi_grab.txt` | Windows | Extract all saved WiFi SSIDs and passwords |
+| `sysinfodump.txt` | Windows | Comprehensive system information collection |
+| `browser_harvest.txt` | Windows | Browser history, bookmarks, and cookie extraction |
+| `reverse_beacon.txt` | Windows | DNS-based reverse beacon for covert signaling |
+| `credential_dump.txt` | Windows | Windows Credential Manager extraction |
+| `network_recon.txt` | Windows | Network configuration and active connection mapping |
+
+---
+
+## Sub-GHz Reference
+
+- **Frequency Atlas** — ISM bands, regional allocations, IoT protocols, garage/gate frequencies
+- **Rolling Code Theory** — RollJam, RollBack, KeeLoq cryptanalysis, countermeasures
+- **Protocol Reference** — OOK, ASK, FSK, GFSK, LoRa modulation types
+
+---
+
+## NFC Attack Reference
+
+- **Mifare Classic** — Default keys, nested attack, darkside attack, hardnested, relay
+- **NDEF Injection** — URL redirect, WiFi auto-connect, vCard injection, app launch
+- **EMV Contactless** — What can/cannot be read, skimming limitations
+- **Magic Cards** — Gen1a through Gen4 compatibility reference
+
+---
+
+## Infrared Reference
+
+- **Universal Codes** — TV, AC, projector, soundbar codes by brand and protocol
+- **Capture Guide** — Step-by-step IR signal capture, raw recording, file format
+
+---
+
+## Payload Builder (Anti-AI)
+
+The `FLLC_Tools/payload_builder.py` generates polymorphic BadUSB payloads:
+
+```bash
+# Generate WiFi grabber with anti-AI timing jitter
+python payload_builder.py wifi_grab -o wifi.txt --obfuscation 2
+
+# Generate 5 unique variants of sysinfo dump
+python payload_builder.py sysinfo --variants 5 -o sysinfo.txt
+
+# List all templates
+python payload_builder.py --list
+```
+
+**Anti-AI features:**
+- Randomized inter-keystroke delays (defeats behavioral analysis)
+- Polymorphic delay patterns (each variant is unique)
+- String obfuscation levels (case mixing, concatenation splitting)
+- Gaussian-distributed timing (mimics human typing patterns)
+
+---
+
+## Community Resources (Included)
+
+| Directory | Source |
+|-----------|--------|
+| `BadUSB/` | Community DuckyScript payloads |
+| `Sub-GHz/` | Regional frequency databases |
+| `NFC/` | NFC card data and assets |
+| `Infrared/` | IR remote databases |
+| `Applications/` | .fap application files |
+| `GPIO/` | GPIO pinout references and scripts |
+| `Wifi_DevBoard/` | WiFi devboard (ESP32) integration |
+
+---
+
+## SD Card Setup
+
+```bash
+# Organize your Flipper SD card
+python FLLC_Tools/sd_organizer.py E:\ --all
+
+# This will:
+#   1. Create all required directories
+#   2. Move loose files to correct locations
+#   3. Remove duplicates
+#   4. Generate inventory report
+```
+
+---
+
+## Legal
+
+For authorized penetration testing and security research only.
+
+**FLLC 2026** — FU PERSON by PERSON FU
