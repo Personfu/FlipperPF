@@ -9,11 +9,12 @@
 ```
 
 <p align="center">
-<img src="https://img.shields.io/badge/FLLC-Flipper_Zero-00FFFF?style=for-the-badge&labelColor=0D0D2B"/>
-<img src="https://img.shields.io/badge/BadUSB-Payloads-FF00FF?style=for-the-badge&labelColor=0D0D2B"/>
-<img src="https://img.shields.io/badge/Sub--GHz-Radio-7B2FBE?style=for-the-badge&labelColor=0D0D2B"/>
-<img src="https://img.shields.io/badge/NFC-Attacks-00FFFF?style=for-the-badge&labelColor=0D0D2B"/>
-<img src="https://img.shields.io/badge/Anti--AI-Evasion-FF00FF?style=for-the-badge&labelColor=0D0D2B"/>
+<img src="https://img.shields.io/badge/FLLC-2026-00FFFF?style=for-the-badge&labelColor=0D0D2B"/>
+<img src="https://img.shields.io/badge/BadUSB-75_Payloads-FF00FF?style=for-the-badge&labelColor=0D0D2B"/>
+<img src="https://img.shields.io/badge/Sub--GHz-9,040_Files-7B2FBE?style=for-the-badge&labelColor=0D0D2B"/>
+<img src="https://img.shields.io/badge/NFC-27_Resources-00FFFF?style=for-the-badge&labelColor=0D0D2B"/>
+<img src="https://img.shields.io/badge/IR-11_Remotes-FF00FF?style=for-the-badge&labelColor=0D0D2B"/>
+<img src="https://img.shields.io/badge/Anti--AI-Evasion-00FF88?style=for-the-badge&labelColor=0D0D2B"/>
 </p>
 
 ---
